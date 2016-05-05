@@ -10,7 +10,7 @@ namespace shortvec {
 
     template <size_t N, typename T = double>
     class vec {
-        protected:
+        private:
             T data[N];
         public:
             // assignment operator
@@ -86,37 +86,37 @@ namespace shortvec {
                 return *this;
             }
 
-
-            // norm
+            // dot product
             template <typename..., typename S = T>
             typename std::enable_if<std::is_arithmetic<S>::value, S>::type
-            dot(const vec& other) const {
+            operator*(const vec<N,T>& rhs) const {
                 T sum;
                 for (size_t i = 0; i < N; ++i)
-                    sum += data[i] * other.data[i];
+                    sum += data[i] * rhs.data[i];
                 return sum;
             }
 
             template <typename..., typename S = T>
             typename std::enable_if<is_complex<S>::value, S>::type
-            dot(const vec& other) const {
+            operator*(const vec<N,T>& rhs) const {
                 T sum;
                 for (size_t i = 0; i < N; ++i)
-                    sum += conj(data[i]) * other.data[i];
+                    sum += conj(data[i]) * rhs.data[i];
                 return sum;
             }
 
+            // norm
             template <typename..., typename S = T>
             typename std::enable_if<std::is_arithmetic<S>::value, S>::type
             norm_sq() const {
-                return dot(*this);
+                return (*this) * (*this);
             }
 
             template <typename..., typename S = T>
             typename std::enable_if<is_complex<S>::value,
                                     typename S::value_type>::type
             norm_sq() const {
-                return dot(*this).real();
+                return ((*this) * (*this)).real();
             }
 
             template <typename..., typename S = T>
@@ -133,9 +133,7 @@ namespace shortvec {
             }
     };
 
-    // dot product
-    /* template <typename T> vec<T> operator* (const vec<T>& lhs, const vec<T>& rhs); */
-
+    // scalar multiplication
     template <size_t N, typename T>
     vec<N,T> operator* (const T& val, const vec<N,T>& rhs) {
         vec<N,T> res(rhs);
