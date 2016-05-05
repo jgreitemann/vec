@@ -86,6 +86,14 @@ namespace shortvec {
                 return *this;
             }
 
+            bool operator== (const vec& rhs) const {
+                for (size_t i = 0; i < N; ++i)
+                    if (data[i] != rhs.data[i])
+                        return false;
+                return true;
+            }
+
+
             // dot product
             template <typename..., typename S = T>
             typename std::enable_if<std::is_arithmetic<S>::value, S>::type
@@ -175,10 +183,10 @@ namespace shortvec {
         return res;
     }
 
-
-    /* template <size_t N, typename T> vec<N,T> operator== (const vec<N,T>& lhs, const vec<N,T>& rhs); */
-
-    /* template <size_t N, typename T> vec<N,T> operator!= (const vec<N,T>& lhs, const vec<N,T>& rhs); */
+    template <size_t N, typename T>
+    bool operator!= (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+        return !(lhs == rhs);
+    }
 
     /* template <size_t N, typename T> bool operator< (const vec<N,T>& lhs, const vec<N,T>& rhs); */
     /* template <size_t N, typename T> bool operator< (const T& val, const vec<N,T>& rhs); */
