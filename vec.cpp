@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
     cout << a.norm() << endl;
     vec<3,double> d = a - b;
     d /= 2;
+    cout << "d = (" << d[0] << "," << d[1] << "," << d[2] << ")" << endl;
     cout << d.norm() << endl;
     vec<3> e(a);
     cout << (a == b) << endl;

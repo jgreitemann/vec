@@ -48,6 +48,14 @@ namespace Vec {
 
 
             // operators
+            const T& operator[](size_t i) const {
+                return data[i];
+            }
+
+            T& operator[](size_t i) {
+                return data[i];
+            }
+
             vec operator+() const {
                 return vec(*this);
             }
