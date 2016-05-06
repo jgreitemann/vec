@@ -3,7 +3,7 @@
 #include "vec.hpp"
 
 using namespace std;
-using namespace shortvec;
+using namespace Vec;
 
 int main(int argc, char *argv[]) {
     vec<3,double> a = {1., 2., 3.};

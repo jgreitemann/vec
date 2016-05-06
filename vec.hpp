@@ -4,7 +4,7 @@
 #include <complex>
 #include <cmath>
 
-namespace shortvec {
+namespace Vec {
     template<typename S> struct is_complex : std::false_type {};
     template<typename S> struct is_complex<std::complex<S>> : std::true_type {};
 
