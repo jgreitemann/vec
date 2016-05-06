@@ -8,6 +8,21 @@ namespace Vec {
     template<typename S> struct is_complex : std::false_type {};
     template<typename S> struct is_complex<std::complex<S>> : std::true_type {};
 
+    // forward declarations
+    template <size_t N, typename T> class vec;
+
+    template <size_t N, typename T>
+    bool operator== (const vec<N,T>&, const vec<N,T>&);
+
+    template <size_t N, typename T>
+    typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+    operator*(const vec<N,T>&, const vec<N,T>&);
+
+    template <size_t N, typename T>
+    typename std::enable_if<is_complex<T>::value, T>::type
+    operator*(const vec<N,T>&, const vec<N,T>&);
+
+    // definition
     template <size_t N, typename T = double>
     class vec {
         private:
@@ -94,32 +109,9 @@ namespace Vec {
                 return *this;
             }
 
-            bool operator== (const vec& rhs) const {
-                for (size_t i = 0; i < N; ++i)
-                    if (data[i] != rhs.data[i])
-                        return false;
-                return true;
-            }
+            friend bool operator== <N,T>(const vec<N,T>&, const vec<N,T>&);
 
-
-            // dot product
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_arithmetic<S>::value, S>::type
-            operator*(const vec<N,T>& rhs) const {
-                T sum;
-                for (size_t i = 0; i < N; ++i)
-                    sum += data[i] * rhs.data[i];
-                return sum;
-            }
-
-            template <typename..., typename S = T>
-            typename std::enable_if<is_complex<S>::value, S>::type
-            operator*(const vec<N,T>& rhs) const {
-                T sum;
-                for (size_t i = 0; i < N; ++i)
-                    sum += conj(data[i]) * rhs.data[i];
-                return sum;
-            }
+            friend T operator* <N,T>(const vec<N,T>&, const vec<N,T>&);
 
             // norm
             template <typename..., typename S = T>
@@ -148,6 +140,26 @@ namespace Vec {
                 return sqrt(norm_sq());
             }
     };
+
+    // dot product
+    template <size_t N, typename T>
+    typename std::enable_if<std::is_arithmetic<T>::value, T>::type
+    operator*(const vec<N,T>& lhs, const vec<N,T>& rhs) {
+        T sum;
+        for (size_t i = 0; i < N; ++i)
+            sum += lhs.data[i] * rhs.data[i];
+        return sum;
+    }
+
+    template <size_t N, typename T>
+    typename std::enable_if<is_complex<T>::value, T>::type
+    operator*(const vec<N,T>& lhs, const vec<N,T>& rhs) {
+        T sum;
+        for (size_t i = 0; i < N; ++i)
+            sum += conj(lhs.data[i]) * rhs.data[i];
+        return sum;
+    }
+
 
     // scalar multiplication
     template <size_t N, typename T>
@@ -189,6 +201,14 @@ namespace Vec {
         vec<N,T> res(lhs);
         res -= rhs;
         return res;
+    }
+
+    template <size_t N, typename T>
+    bool operator== (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+        for (size_t i = 0; i < N; ++i)
+            if (lhs.data[i] != rhs.data[i])
+                return false;
+        return true;
     }
 
     template <size_t N, typename T>
