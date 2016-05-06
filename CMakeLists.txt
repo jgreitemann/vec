@@ -1,0 +1,11 @@
+cmake_minimum_required (VERSION 2.6)
+project (vec CXX)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+add_executable(vec vec.cpp)
+
+set(INSTALL_CMAKE_DIR CMake)
+configure_file (vecConfig.cmake.in vecConfig.cmake)
+install (FILES ${PROJECT_BINARY_DIR}/vecConfig.cmake
+         DESTINATION ${INSTALL_CMAKE_DIR})
+install (FILES vec.hpp DESTINATION include)
