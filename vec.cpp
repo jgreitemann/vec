@@ -25,5 +25,8 @@ int main(int argc, char *argv[]) {
     complex<int> I(0, 1);
     vec<2,complex<int>> c {1+I, 2-I};
     cout << c.norm() << endl;
+    c.conj();
+    cout << "(" << c[0] << "," << c[1] << ")" << endl;
+    cout << c.norm() << endl;
     return 0;
 }

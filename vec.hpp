@@ -139,6 +139,13 @@ namespace Vec {
             norm() const {
                 return sqrt(norm_sq());
             }
+
+            template <typename..., typename S = T>
+            typename std::enable_if<is_complex<S>::value, void>::type
+            conj() {
+                for (size_t i = 0; i < N; ++i)
+                    data[i] = std::conj(data[i]);
+            }
     };
 
     // dot product
@@ -176,6 +183,16 @@ namespace Vec {
         return {std::conj(lhs[1] * rhs[2] - lhs[2] * rhs[1]),
                 std::conj(lhs[2] * rhs[0] - lhs[0] * rhs[2]),
                 std::conj(lhs[0] * rhs[1] - lhs[1] * rhs[0])};
+    }
+
+
+    // complex conjugation
+    template <size_t N, typename T>
+    typename std::enable_if<is_complex<T>::value, vec<N,T>>::type
+    conj(const vec<N,T>& c) {
+        vec<N,T> res(c);
+        res.conj();
+        return res;
     }
 
 
