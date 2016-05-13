@@ -161,6 +161,24 @@ namespace Vec {
     }
 
 
+    // cross product
+    template <typename T>
+    typename std::enable_if<std::is_arithmetic<T>::value, vec<3,T>>::type
+    cross(const vec<3,T>& lhs, const vec<3,T>& rhs) {
+        return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
+                lhs[2] * rhs[0] - lhs[0] * rhs[2],
+                lhs[0] * rhs[1] - lhs[1] * rhs[0]};
+    }
+
+    template <typename T>
+    typename std::enable_if<is_complex<T>::value, vec<3,T>>::type
+    cross(const vec<3,T>& lhs, const vec<3,T>& rhs) {
+        return {std::conj(lhs[1] * rhs[2] - lhs[2] * rhs[1]),
+                std::conj(lhs[2] * rhs[0] - lhs[0] * rhs[2]),
+                std::conj(lhs[0] * rhs[1] - lhs[1] * rhs[0])};
+    }
+
+
     // scalar multiplication
     template <size_t N, typename T>
     vec<N,T> operator* (const T& val, const vec<N,T>& rhs) {

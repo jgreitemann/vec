@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
     cout << (a != b) << endl;
     cout << (a == e) << endl;
     cout << (a != e) << endl;
+    vec<3> f = cross(a, b);
+    cout << "(" << f[0] << ", " << f[1] << ", " << f[2] << ")" << endl;
+    cout << (f * a) << endl;
 
     complex<int> I(0, 1);
     vec<2,complex<int>> c {1+I, 2-I};
