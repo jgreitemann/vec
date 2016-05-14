@@ -1,6 +1,7 @@
 #include <cassert>
 #include <cmath>
 #include <limits>
+#include "close.hpp"
 #include "../vec.hpp"
 
 using namespace Vec;
@@ -13,8 +14,8 @@ int main () {
     assert(abs(a * c) < 100. * std::numeric_limits<double>::epsilon());
     assert(abs(b * c) < 100. * std::numeric_limits<double>::epsilon());
     double sin2_theta = 1. - pow(a*b, 2) / a.norm_sq() / b.norm_sq();
-    assert(abs(c.norm_sq() / a.norm_sq() / b.norm_sq() - sin2_theta)
-            < 100. * std::numeric_limits<double>::epsilon());
+    assert(CLOSE(c.norm_sq() / a.norm_sq() / b.norm_sq(), sin2_theta,
+                 100. * std::numeric_limits<double>::epsilon()));
 
     std::complex<double> I = {0, 1};
     vec<3,std::complex<double>> d = {1.-3.*I, 2.+2.*I, 3.-I};

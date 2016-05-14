@@ -1,6 +1,7 @@
 #include <cassert>
 #include <cmath>
 #include <limits>
+#include "close.hpp"
 #include "../vec.hpp"
 
 using namespace Vec;
@@ -14,14 +15,14 @@ void add_test(S tol) {
     }
     vec<N,T> c = a + b;
     for (size_t i = 0; i < N; ++i)
-        assert(abs(c[i] - T(N)) <= tol);
+        assert(CLOSE(c[i], T(N), tol));
     vec<N,T> d = c - a;
     for (size_t i = 0; i < N; ++i)
-        assert(abs(d[i] - b[i]) <= tol);
+        assert(CLOSE(d[i], b[i], tol));
     d += c;
     d -= b;
     for (size_t i = 0; i < N; ++i)
-        assert(abs(d[i] - c[i]) <= tol);
+        assert(CLOSE(d[i], c[i], tol));
 }
 
 int main () {
