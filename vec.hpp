@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
+#include <iostream>
 #include <initializer_list>
 #include <type_traits>
 #include <complex>
@@ -41,6 +42,7 @@ namespace Vec {
     // definition
     template <size_t N, typename T = double>
     class vec {
+        static_assert(N > 0, "vec may not be zero-dimensional");
         private:
             T data[N];
         public:
@@ -305,5 +307,15 @@ namespace Vec {
     template <size_t N, typename T>
     bool operator!= (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         return !(lhs == rhs);
+    }
+
+
+    // stream operators
+    template <size_t N, typename T>
+    std::ostream& operator<< (std::ostream& os, const vec<N,T>& rhs) {
+        os << "(" << rhs[0];
+        for (size_t i = 1; i < N; ++i)
+            os << ", " << rhs[i];
+        os << ")";
     }
 }
