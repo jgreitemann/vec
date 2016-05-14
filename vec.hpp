@@ -260,6 +260,8 @@ namespace Vec {
         return res;
     }
 
+
+    // modulo operator
     template <size_t N, typename T>
     vec<N,T> operator% (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         vec<N,T> res(lhs);
@@ -274,6 +276,8 @@ namespace Vec {
         return res;
     }
 
+
+    // unary sign operators
     template <size_t N, typename T>
     vec<N,T> operator+ (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         vec<N,T> res(lhs);
@@ -288,6 +292,8 @@ namespace Vec {
         return res;
     }
 
+
+    // (in)equality operators
     template <size_t N, typename T>
     bool operator== (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         for (size_t i = 0; i < N; ++i)
