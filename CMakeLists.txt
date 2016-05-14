@@ -5,10 +5,12 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_executable(vec vec.cpp)
 add_executable(add tests/add.cpp)
 add_executable(norm tests/norm.cpp)
+add_executable(cross tests/cross.cpp)
 
 enable_testing()
 add_test(add add)
 add_test(norm norm)
+add_test(cross cross)
 
 set(INSTALL_CMAKE_DIR CMake)
 configure_file (vecConfig.cmake.in vecConfig.cmake)
