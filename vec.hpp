@@ -98,7 +98,20 @@ namespace Vec {
                 return res;
             }
 
-            /* vec& operator%= (const vec& rhs); */
+            template <typename..., typename S = T>
+            typename std::enable_if<std::is_integral<S>::value, vec&>::type
+            operator%= (const vec& rhs) {
+                for (size_t i = 0; i < N; ++i)
+                    data[i] %= rhs.data[i];
+            }
+
+            template <typename..., typename S = T>
+            typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
+            operator%= (const vec& rhs) {
+                for (size_t i = 0; i < N; ++i)
+                    data[i] = std::fmod(data[i], rhs.data[i]);
+            }
+
             vec& operator+= (const vec& rhs) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] += rhs.data[i];
@@ -111,7 +124,20 @@ namespace Vec {
                 return *this;
             }
 
-            /* vec& operator%= (const T& val); */
+            template <typename..., typename S = T>
+            typename std::enable_if<std::is_integral<S>::value, vec&>::type
+            operator%= (const T& val) {
+                for (size_t i = 0; i < N; ++i)
+                    data[i] %= val;
+            }
+
+            template <typename..., typename S = T>
+            typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
+            operator%= (const T& val) {
+                for (size_t i = 0; i < N; ++i)
+                    data[i] = std::fmod(data[i], val);
+            }
+
             vec& operator*= (const T& val) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] *= val;
@@ -234,11 +260,19 @@ namespace Vec {
         return res;
     }
 
-    /* template <size_t N, typename T> */
-    /* vec<N,T> operator% (const vec<N,T>& lhs, const vec<N,T>& rhs) { */
+    template <size_t N, typename T>
+    vec<N,T> operator% (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+        vec<N,T> res(lhs);
+        res %= rhs;
+        return res;
+    }
 
-    /* } */
-    /* template <size_t N, typename T> vec<N,T> operator% (const vec<N,T>& lhs, const T& val); */
+    template <size_t N, typename T>
+    vec<N,T> operator% (const vec<N,T>& lhs, const T& val) {
+        vec<N,T> res(lhs);
+        res %= val;
+        return res;
+    }
 
     template <size_t N, typename T>
     vec<N,T> operator+ (const vec<N,T>& lhs, const vec<N,T>& rhs) {
