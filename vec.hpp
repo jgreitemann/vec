@@ -266,20 +266,4 @@ namespace Vec {
     bool operator!= (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         return !(lhs == rhs);
     }
-
-    /* template <size_t N, typename T> bool operator< (const vec<N,T>& lhs, const vec<N,T>& rhs); */
-    /* template <size_t N, typename T> bool operator< (const T& val, const vec<N,T>& rhs); */
-    /* template <size_t N, typename T> bool operator< (const vec<N,T>& lhs, const T& val); */
-
-    /* template <size_t N,typename T> bool operator> (const vec<N,T>& lhs, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator> (const T& val, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator> (const vec<N,T>& lhs, const T& val); */
-
-    /* template <size_t N,typename T> bool operator<= (const vec<N,T>& lhs, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator<= (const T& val, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator<= (const vec<N,T>& lhs, const T& val); */
-
-    /* template <size_t N,typename T> bool operator>= (const vec<N,T>& lhs, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator>= (const T& val, const vec<N,T>& rhs); */
-    /* template <size_t N,typename T> bool operator>= (const vec<N,T>& lhs, const T& val); */
 }
