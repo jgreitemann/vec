@@ -1,7 +1,7 @@
 #include <cassert>
 #include <cmath>
 #include <limits>
-#include "vec.hpp"
+#include "../vec.hpp"
 
 using namespace Vec;
 
