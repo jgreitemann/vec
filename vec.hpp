@@ -318,5 +318,6 @@ namespace Vec {
         for (size_t i = 1; i < N; ++i)
             os << ", " << rhs[i];
         os << ")";
+        return os;
     }
 }
