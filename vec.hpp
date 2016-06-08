@@ -89,6 +89,7 @@ namespace Vec {
                 return data[i];
             }
 
+            // unary sign operators
             vec operator+() const {
                 return vec(*this);
             }
@@ -279,7 +280,7 @@ namespace Vec {
     }
 
 
-    // unary sign operators
+    // addition & subtraction operators
     template <size_t N, typename T>
     vec<N,T> operator+ (const vec<N,T>& lhs, const vec<N,T>& rhs) {
         vec<N,T> res(lhs);
