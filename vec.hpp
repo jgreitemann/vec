@@ -47,7 +47,10 @@ namespace Vec {
             T data[N];
         public:
             // assignment operator
-            vec& operator=(const vec& x) {
+            template <typename T2,
+                     typename = typename std::enable_if<
+                         std::is_convertible<T2, T>::value, T2>::type>
+            vec& operator=(const vec<N, T2>& x) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] = x.data[i];
                 return *this;
@@ -67,7 +70,10 @@ namespace Vec {
                     data[i] = p[i];
             }
 
-            vec(const vec& x) {
+            template <typename T2,
+                     typename = typename std::enable_if<
+                         std::is_convertible<T2, T>::value, T2>::type>
+            vec(const vec<N, T2>& x) {
                 *this = x;
             }
 
