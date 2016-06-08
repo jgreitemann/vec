@@ -52,7 +52,7 @@ namespace Vec {
                          std::is_convertible<T2, T>::value, T2>::type>
             vec& operator=(const vec<N, T2>& x) {
                 for (size_t i = 0; i < N; ++i)
-                    data[i] = x.data[i];
+                    data[i] = x[i];
                 return *this;
             }
 
@@ -287,16 +287,16 @@ namespace Vec {
 
 
     // addition & subtraction operators
-    template <size_t N, typename T>
-    vec<N,T> operator+ (const vec<N,T>& lhs, const vec<N,T>& rhs) {
-        vec<N,T> res(lhs);
+    template <size_t N, typename A, typename B, typename C = decltype(A()+B())>
+    vec<N,C> operator+ (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+        vec<N,C> res(lhs);
         res += rhs;
         return res;
     }
 
-    template <size_t N, typename T>
-    vec<N,T> operator- (const vec<N,T>& lhs, const vec<N,T>& rhs) {
-        vec<N,T> res(lhs);
+    template <size_t N, typename A, typename B, typename C = decltype(A()-B())>
+    vec<N,C> operator- (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+        vec<N,C> res(lhs);
         res -= rhs;
         return res;
     }
