@@ -26,6 +26,8 @@ int main(int argc, char *argv[]) {
     vec<3> a = {1., 2., 3.};
     // 2-norm
     cout << "||a|| = " << a.norm() << endl;
+    // 1-norm
+    cout << "||a||_1 = " << a.norm(1) << endl;
 
     vec<3,int> b = {3, 2, 1};
     cout << "dot product: a * b = " << a * b << endl;
@@ -43,7 +45,7 @@ int main(int argc, char *argv[]) {
     vec<2, complex<int>> c = {1+I, 2-I};
 
     // norm, dot product, and cross product are complex-aware
-    cout << "||c||^2 = " << c.norm_sq() << endl;
+    cout << "||c||^2 = " << c.norm2_sq() << endl;
     cout << "conjugate: c* = " << conj(c) << endl;
     return 0;
 }

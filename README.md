@@ -19,6 +19,8 @@ Features / properties:
 vec<3> a = {1., 2., 3.};
 // 2-norm
 cout << "||a|| = " << a.norm() << endl;
+// 1-norm
+cout << "||a||_1 = " << a.norm(1) << endl;
 
 vec<3,int> b = {3, 2, 1};
 cout << "dot product: a * b = " << a * b << endl;
@@ -36,7 +38,7 @@ complex<int> I(0, 1);
 vec<2, complex<int>> c = {1+I, 2-I};
 
 // norm, dot product, and cross product are complex-aware
-cout << "||c||^2 = " << c.norm_sq() << endl;
+cout << "||c||^2 = " << c.norm2_sq() << endl;
 cout << "conjugate: c* = " << conj(c) << endl;
 ```
 
@@ -61,4 +63,4 @@ $ make test
 ```
 
 ## Installation
-The header `vec.hpp` is copied to the default include directory upon `make install`. You'll most likely want to run this as root. You can change the default install location by passing `-DCMAKE_INSTALL_PREFIX=/place/to/install` to `cmake` (but skip the trailing `/include` in the prefix path). CMake will also install a `vecConfig.cmake` file to be used with the CMake directive `find_package` in your projects. 
+The header `vec.hpp` is copied to the default include directory upon `make install`. You'll most likely want to run this as root. You can change the default install location by passing `-DCMAKE_INSTALL_PREFIX=/place/to/install` to `cmake` (but skip the trailing `/include` in the prefix path). CMake will also install a `vecConfig.cmake` file to be used with the CMake directive `find_package` in your projects.

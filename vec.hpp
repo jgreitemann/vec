@@ -160,28 +160,22 @@ namespace Vec {
             // norm
             template <typename..., typename S = T>
             typename std::enable_if<std::is_arithmetic<S>::value, S>::type
-            norm_sq() const {
+            norm2_sq() const {
                 return (*this) * (*this);
             }
 
             template <typename..., typename S = T>
             typename std::enable_if<is_complex<S>::value,
                                     typename S::value_type>::type
-            norm_sq() const {
+            norm2_sq() const {
                 return ((*this) * (*this)).real();
             }
 
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_arithmetic<S>::value, S>::type
-            norm() const {
-                return sqrt(norm_sq());
-            }
-
-            template <typename..., typename S = T>
-            typename std::enable_if<is_complex<S>::value,
-                                    typename S::value_type>::type
-            norm() const {
-                return sqrt(norm_sq());
+            double norm(double p = 2) const {
+                double sum;
+                for (size_t i = 0; i < N; ++i)
+                    sum += pow(abs(data[i]), p);
+                return pow(sum, 1./p);
             }
 
             template <typename..., typename S = T>

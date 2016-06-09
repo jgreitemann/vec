@@ -26,7 +26,7 @@ const size_t N = 10;
 
 int main () {
     vec<N,double> a(1.);
-    assert(CLOSE(a.norm_sq(), N, 100 * std::numeric_limits<double>::epsilon()));
+    assert(CLOSE(a.norm2_sq(), N, 100 * std::numeric_limits<double>::epsilon()));
     vec<N,double> b = 42 * a;
     assert(CLOSE(a.norm() * 42, b.norm(),
                  100 * std::numeric_limits<double>::epsilon()));
@@ -35,7 +35,8 @@ int main () {
     vec<N,std::complex<double>> c(exp(I / double(N)));
     for (size_t i = 0; i < N; ++i)
         c[i] = pow(c[i], i);
-    assert(CLOSE(c.norm_sq(), N, 100 * std::numeric_limits<double>::epsilon()));
+    assert(CLOSE(c.norm2_sq(), N, 100 * std::numeric_limits<double>::epsilon()));
+    assert(CLOSE(c.norm(1), N, 100 * std::numeric_limits<double>::epsilon()));
     vec<N,std::complex<double>> d = 42. * c;
     assert(CLOSE(c.norm() * 42., d.norm(),
                  100 * std::numeric_limits<double>::epsilon()));

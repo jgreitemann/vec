@@ -29,8 +29,8 @@ int main () {
     vec<3,double> c = cross(a, b);
     assert(abs(a * c) < 100. * std::numeric_limits<double>::epsilon());
     assert(abs(b * c) < 100. * std::numeric_limits<double>::epsilon());
-    double sin2_theta = 1. - pow(a*b, 2) / a.norm_sq() / b.norm_sq();
-    assert(CLOSE(c.norm_sq() / a.norm_sq() / b.norm_sq(), sin2_theta,
+    double sin2_theta = 1. - pow(a*b, 2) / a.norm2_sq() / b.norm2_sq();
+    assert(CLOSE(c.norm2_sq() / a.norm2_sq() / b.norm2_sq(), sin2_theta,
                  100. * std::numeric_limits<double>::epsilon()));
 
     std::complex<double> I = {0, 1};
