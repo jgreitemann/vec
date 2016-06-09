@@ -29,9 +29,6 @@ namespace Vec {
     template <size_t N, typename T> class vec;
 
     template <size_t N, typename T>
-    bool operator== (const vec<N,T>&, const vec<N,T>&);
-
-    template <size_t N, typename T>
     typename std::enable_if<std::is_arithmetic<T>::value, T>::type
     operator*(const vec<N,T>&, const vec<N,T>&);
 
@@ -161,7 +158,9 @@ namespace Vec {
                 return *this;
             }
 
-            friend bool operator== <N,T>(const vec<N,T>&, const vec<N,T>&);
+            // friends
+            template <size_t N_, typename A, typename B>
+            friend bool operator== (const vec<N_,A>&, const vec<N_,B>&);
 
             friend T operator* <N,T>(const vec<N,T>&, const vec<N,T>&);
 
@@ -304,16 +303,16 @@ namespace Vec {
 
 
     // (in)equality operators
-    template <size_t N, typename T>
-    bool operator== (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+    template <size_t N, typename A, typename B>
+    bool operator== (const vec<N,A>& lhs, const vec<N,B>& rhs) {
         for (size_t i = 0; i < N; ++i)
             if (lhs.data[i] != rhs.data[i])
                 return false;
         return true;
     }
 
-    template <size_t N, typename T>
-    bool operator!= (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+    template <size_t N, typename A, typename B>
+    bool operator!= (const vec<N,A>& lhs, const vec<N,B>& rhs) {
         return !(lhs == rhs);
     }
 
