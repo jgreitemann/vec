@@ -218,17 +218,17 @@ namespace Vec {
 
 
     // cross product
-    template <typename T>
-    typename std::enable_if<std::is_arithmetic<T>::value, vec<3,T>>::type
-    cross(const vec<3,T>& lhs, const vec<3,T>& rhs) {
+    template <typename A, typename B, typename C = decltype(A()*B())>
+    typename std::enable_if<std::is_arithmetic<A>::value, vec<3,C>>::type
+    cross(const vec<3,A>& lhs, const vec<3,B>& rhs) {
         return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
                 lhs[2] * rhs[0] - lhs[0] * rhs[2],
                 lhs[0] * rhs[1] - lhs[1] * rhs[0]};
     }
 
-    template <typename T>
-    typename std::enable_if<is_complex<T>::value, vec<3,T>>::type
-    cross(const vec<3,T>& lhs, const vec<3,T>& rhs) {
+    template <typename A, typename B, typename C = decltype(A()*B())>
+    typename std::enable_if<is_complex<A>::value, vec<3,C>>::type
+    cross(const vec<3,A>& lhs, const vec<3,B>& rhs) {
         return {std::conj(lhs[1] * rhs[2] - lhs[2] * rhs[1]),
                 std::conj(lhs[2] * rhs[0] - lhs[0] * rhs[2]),
                 std::conj(lhs[0] * rhs[1] - lhs[1] * rhs[0])};

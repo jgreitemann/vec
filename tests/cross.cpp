@@ -25,7 +25,7 @@ using namespace Vec;
 
 int main () {
     vec<3,double> a = {1., 2., 3.};
-    vec<3,double> b = {3., 2., 1.};
+    vec<3,int> b = {3, 2, 1};
     vec<3,double> c = cross(a, b);
     assert(abs(a * c) < 100. * std::numeric_limits<double>::epsilon());
     assert(abs(b * c) < 100. * std::numeric_limits<double>::epsilon());
