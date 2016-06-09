@@ -25,9 +25,6 @@ namespace Vec {
     template<typename S> struct is_complex : std::false_type {};
     template<typename S> struct is_complex<std::complex<S>> : std::true_type {};
 
-    // forward declarations
-    template <size_t N, typename T> class vec;
-
     // definition
     template <size_t N, typename T = double>
     class vec {
