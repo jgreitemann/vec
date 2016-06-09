@@ -23,23 +23,27 @@ using namespace Vec;
 
 int main(int argc, char *argv[]) {
     // default data type assumes double
-    vec<3> a = {1, 2, 3};
+    vec<3> a = {1., 2., 3.};
     // 2-norm
     cout << "||a|| = " << a.norm() << endl;
-    vec<3> b = {3, 2, 1};
+
+    vec<3,int> b = {3, 2, 1};
     cout << "dot product: a * b = " << a * b << endl;
     // cross product is defined on vec<3,T> only
     cout << "cross product: a x b = " << cross(a, b) << endl;
+
     // linear operations are overloaded, naturally
-    vec<3> d = a - b;
+    auto d = a - b;
     d /= 2;
     cout << "d = " << d << endl;
+
 
     complex<int> I(0, 1);
     // data type may be complex and integral
     vec<2, complex<int>> c = {1+I, 2-I};
+
     // norm, dot product, and cross product are complex-aware
-    cout << c.norm() << endl;
-    cout << "conjugate: " << conj(c) << endl;
+    cout << "||c||^2 = " << c.norm_sq() << endl;
+    cout << "conjugate: c* = " << conj(c) << endl;
     return 0;
 }

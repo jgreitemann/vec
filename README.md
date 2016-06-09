@@ -7,6 +7,8 @@ Features / properties:
  * much faster for physical dimensions (N=2, 3) than `std::valarray` (break-even dimension is somewhere between N=10 and 20 on my system),
  * linear operations, dot product via operator overloading
  * cross product as a template specialization for `vec<3,T>`,
+ * `vec<N,T>`s of different data types `T` may be added, dotted, crossed, etc. if the underlying types support the corresponding arithmetic operations,
+ * supports automatic implicit conversion with respect to data type for non-template function calls,
  * complex number-aware: conjugation in apropriate places using type traits,
  * provides `Vec::is_complex<T>` type trait for external use,
  * modulo operation for real integral and floating point (sic!) types: useful e.g. in Umklapp scattering
@@ -14,17 +16,17 @@ Features / properties:
 ## Usage
 ```cxx
 // default data type assumes double
-vec<3> a = {1, 2, 3};
+vec<3> a = {1., 2., 3.};
 // 2-norm
 cout << "||a|| = " << a.norm() << endl;
 
-vec<3> b = {3, 2, 1};
+vec<3,int> b = {3, 2, 1};
 cout << "dot product: a * b = " << a * b << endl;
 // cross product is defined on vec<3,T> only
 cout << "cross product: a x b = " << cross(a, b) << endl;
 
 // linear operations are overloaded, naturally
-vec<3> d = a - b;
+auto d = a - b;
 d /= 2;
 cout << "d = " << d << endl;
 
@@ -34,8 +36,8 @@ complex<int> I(0, 1);
 vec<2, complex<int>> c = {1+I, 2-I};
 
 // norm, dot product, and cross product are complex-aware
-cout << c.norm() << endl;
-cout << "conjugate: " << conj(c) << endl;
+cout << "||c||^2 = " << c.norm_sq() << endl;
+cout << "conjugate: c* = " << conj(c) << endl;
 ```
 
 Output:
@@ -44,8 +46,8 @@ Output:
 dot product: a * b = 10
 cross product: a x b = (-4, 8, -4)
 d = (-1, 0, 1)
-2
-conjugate: ((1,-1), (2,1))
+||c||^2 = 7
+conjugate: c* = ((1,-1), (2,1))
 ```
 
 ## Testing
