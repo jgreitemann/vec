@@ -22,17 +22,19 @@
 
 using namespace Vec;
 
-template <size_t N, typename T, typename S = T>
+template <size_t N, typename T1, typename T2, typename S = T1,
+          typename T3 = decltype(T1()+T2())>
 void add_test(S tol) {
-    vec<N,T> a, b;
+    vec<N,T1> a;
+    vec<N,T2> b;
     for (size_t i = 0; i < N; ++i) {
-        a[i] = T(i);
-        b[i] = T(N - i);
+        a[i] = T1(i);
+        b[i] = T2(N - i);
     }
-    vec<N,T> c = a + b;
+    vec<N,T3> c = a + b;
     for (size_t i = 0; i < N; ++i)
-        assert(CLOSE(c[i], T(N), tol));
-    vec<N,T> d = c - a;
+        assert(CLOSE(c[i], T1(N), tol));
+    vec<N,T3> d = c - a;
     for (size_t i = 0; i < N; ++i)
         assert(CLOSE(d[i], b[i], tol));
     d += c;
@@ -42,15 +44,21 @@ void add_test(S tol) {
 }
 
 int main () {
-    add_test<10, int>(0);
-    add_test<10, float>(100 * std::numeric_limits<float>::epsilon());
-    add_test<10, double>(100 * std::numeric_limits<double>::epsilon());
-    add_test<10, std::complex<int>, int>(0);
-    add_test<10, std::complex<float>, float>(
+    // tests with same types
+    add_test<10, int, int>(0);
+    add_test<10, float, float>(100 * std::numeric_limits<float>::epsilon());
+    add_test<10, double, double>(100 * std::numeric_limits<double>::epsilon());
+    add_test<10, std::complex<int>, std::complex<int>, int>(0);
+    add_test<10, std::complex<float>, std::complex<float>, float>(
             100 * std::numeric_limits<float>::epsilon()
     );
-    add_test<10, std::complex<double>, double>(
+    add_test<10, std::complex<double>, std::complex<double>, double>(
             100 * std::numeric_limits<double>::epsilon()
     );
+
+    // tests with different types
+    add_test<10, int, double, double>(
+            100 * std::numeric_limits<double>::epsilon());
+    add_test<10, int, std::complex<int>, int>(0);
     return 0;
 }
