@@ -28,14 +28,6 @@ namespace Vec {
     // forward declarations
     template <size_t N, typename T> class vec;
 
-    template <size_t N, typename T>
-    typename std::enable_if<std::is_arithmetic<T>::value, T>::type
-    operator*(const vec<N,T>&, const vec<N,T>&);
-
-    template <size_t N, typename T>
-    typename std::enable_if<is_complex<T>::value, T>::type
-    operator*(const vec<N,T>&, const vec<N,T>&);
-
     // definition
     template <size_t N, typename T = double>
     class vec {
@@ -162,7 +154,13 @@ namespace Vec {
             template <size_t N_, typename A, typename B>
             friend bool operator== (const vec<N_,A>&, const vec<N_,B>&);
 
-            friend T operator* <N,T>(const vec<N,T>&, const vec<N,T>&);
+            template <size_t N_, typename A, typename B, typename C>
+            friend typename std::enable_if<std::is_arithmetic<A>::value,C>::type
+            operator* (const vec<N_,A>&, const vec<N_,B>&);
+
+            template <size_t N_, typename A, typename B, typename C>
+            friend typename std::enable_if<is_complex<A>::value,C>::type
+            operator* (const vec<N_,A>&, const vec<N_,B>&);
 
             // norm
             template <typename..., typename S = T>
@@ -200,19 +198,19 @@ namespace Vec {
     };
 
     // dot product
-    template <size_t N, typename T>
-    typename std::enable_if<std::is_arithmetic<T>::value, T>::type
-    operator*(const vec<N,T>& lhs, const vec<N,T>& rhs) {
-        T sum;
+    template <size_t N, typename A, typename B, typename C = decltype(A()*B())>
+    typename std::enable_if<std::is_arithmetic<A>::value, C>::type
+    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs) {
+        C sum;
         for (size_t i = 0; i < N; ++i)
             sum += lhs.data[i] * rhs.data[i];
         return sum;
     }
 
-    template <size_t N, typename T>
-    typename std::enable_if<is_complex<T>::value, T>::type
-    operator*(const vec<N,T>& lhs, const vec<N,T>& rhs) {
-        T sum;
+    template <size_t N, typename A, typename B, typename C = decltype(A()*B())>
+    typename std::enable_if<is_complex<A>::value, C>::type
+    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs) {
+        C sum;
         for (size_t i = 0; i < N; ++i)
             sum += conj(lhs.data[i]) * rhs.data[i];
         return sum;
