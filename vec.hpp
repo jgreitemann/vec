@@ -73,11 +73,11 @@ namespace Vec {
 
 
             // operators
-            const T& operator[](size_t i) const {
+            inline const T& operator[](size_t i) const {
                 return data[i];
             }
 
-            T& operator[](size_t i) {
+            inline T& operator[](size_t i) {
                 return data[i];
             }
 
