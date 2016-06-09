@@ -147,14 +147,15 @@ namespace Vec {
                     data[i] = std::fmod(data[i], val);
             }
 
-            vec& operator*= (const T& val) {
+            template <typename S>
+            vec& operator*= (const S& val) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] *= val;
                 return *this;
-
             }
 
-            vec& operator/= (const T& val) {
+            template <typename S>
+            vec& operator/= (const S& val) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] /= val;
                 return *this;
@@ -248,23 +249,23 @@ namespace Vec {
 
 
     // scalar multiplication
-    template <size_t N, typename T>
-    vec<N,T> operator* (const T& val, const vec<N,T>& rhs) {
-        vec<N,T> res(rhs);
+    template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
+    vec<N,C> operator* (const S& val, const vec<N,T>& rhs) {
+        vec<N,C> res(rhs);
         res *= val;
         return res;
     }
 
-    template <size_t N, typename T>
-    vec<N,T> operator* (const vec<N,T>& lhs, const T& val) {
-        vec<N,T> res(lhs);
+    template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
+    vec<N,C> operator* (const vec<N,T>& lhs, const S& val) {
+        vec<N,C> res(lhs);
         res *= val;
         return res;
     }
 
-    template <size_t N, typename T>
-    vec<N,T> operator/ (const vec<N,T>& lhs, const T& val) {
-        vec<N,T> res(lhs);
+    template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
+    vec<N,C> operator/ (const vec<N,T>& lhs, const S& val) {
+        vec<N,C> res(lhs);
         res /= val;
         return res;
     }
