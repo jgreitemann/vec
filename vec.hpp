@@ -136,15 +136,13 @@ namespace Vec {
                     data[i] = std::fmod(data[i], val);
             }
 
-            template <typename S>
-            vec& operator*= (const S& val) {
+            vec& operator*= (const T& val) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] *= val;
                 return *this;
             }
 
-            template <typename S>
-            vec& operator/= (const S& val) {
+            vec& operator/= (const T& val) {
                 for (size_t i = 0; i < N; ++i)
                     data[i] /= val;
                 return *this;
