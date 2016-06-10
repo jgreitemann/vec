@@ -64,11 +64,12 @@ namespace Vec {
             }
 
             vec(std::initializer_list<T> il) {
-                T *ptr = data;
-                for (const T& e: il) {
-                    *ptr = e;
-                    ++ptr;
-                }
+                size_t i;
+                const T* it;
+                for (i = 0, it = il.begin(); it != il.end() && i < N; ++i, ++it)
+                    data[i] = *it;
+                for (; i < N; ++i)
+                    data[i] = T();
             }
 
 
