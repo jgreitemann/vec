@@ -44,7 +44,7 @@ namespace Vec {
 
 
             // constructors
-            vec() {}
+            vec() : data{} {}
 
             vec(const T& val) {
                 for (size_t i = 0; i < N; ++i)
