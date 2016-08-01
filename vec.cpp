@@ -21,7 +21,8 @@
 using namespace std;
 using namespace Vec;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     // default data type assumes double
     vec<3> a = {1., 2., 3.};
     // 2-norm

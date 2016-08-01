@@ -23,7 +23,8 @@ using namespace Vec;
 
 const size_t N = 10;
 
-int main () {
+int main ()
+{
     std::complex<double> I = {0, 1};
     vec<N,std::complex<double>> c(exp(I / double(N)));
     for (size_t i = 0; i < N; ++i)

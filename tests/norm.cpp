@@ -24,7 +24,8 @@ using namespace Vec;
 
 const size_t N = 10;
 
-int main () {
+int main ()
+{
     vec<N,double> a(1.);
     assert(CLOSE(a.norm2_sq(), N, 100 * std::numeric_limits<double>::epsilon()));
     vec<N,double> b = 42 * a;

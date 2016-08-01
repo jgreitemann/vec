@@ -23,7 +23,8 @@
 using namespace Vec;
 
 
-int main () {
+int main ()
+{
     vec<3,double> a = {1., 2., 3.};
     vec<3,int> b = {3, 2, 1};
     vec<3,double> c = cross(a, b);

@@ -21,7 +21,8 @@
 using namespace Vec;
 
 template <size_t N, typename T>
-void mod_test() {
+void mod_test()
+{
     vec<N,T> a, b(T(3)), c;
     for (size_t i = 0; i < N; ++i) {
         a[i] = T(i);
@@ -36,7 +37,8 @@ void mod_test() {
     assert(d == c);
 }
 
-int main () {
+int main ()
+{
     mod_test<10, int>();
     mod_test<10, long>();
     mod_test<10, float>();

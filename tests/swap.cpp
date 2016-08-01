@@ -23,7 +23,8 @@ using namespace Vec;
 
 const size_t N = 10;
 
-int main () {
+int main ()
+{
     vec<N,double> a, b;
     for (size_t i = 0; i < N; ++i) {
         a[i] = double(i);

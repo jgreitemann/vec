@@ -28,169 +28,191 @@ namespace Vec {
     // definition
     template <size_t N, typename T = double>
     class vec {
-        static_assert(N > 0, "vec may not be zero-dimensional");
-        private:
-            T data[N];
-        public:
-            // assignment operator
-            template <typename T2,
-                     typename = typename std::enable_if<
-                         std::is_convertible<T2, T>::value, T2>::type>
-            vec& operator=(const vec<N, T2>& x) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = x[i];
-                return *this;
-            }
+	static_assert(N > 0, "vec may not be zero-dimensional");
+    private:
+	T data[N];
+    public:
+	// assignment operator
+	template <typename T2,
+		    typename = typename std::enable_if<
+			std::is_convertible<T2, T>::value, T2>::type>
+	vec& operator=(const vec<N, T2>& x)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = x[i];
+	    return *this;
+	}
 
 
-            // constructors
-            vec() : data{} {}
+	// constructors
+	vec() : data{} {}
 
-            vec(const T& val) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = val;
-            }
+	vec(const T& val)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = val;
+	}
 
-            vec(const T* p) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = p[i];
-            }
+	vec(const T* p)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = p[i];
+	}
 
-            template <typename T2,
-                     typename = typename std::enable_if<
-                         std::is_convertible<T2, T>::value, T2>::type>
-            vec(const vec<N, T2>& x) {
-                *this = x;
-            }
+	template <typename T2,
+		    typename = typename std::enable_if<
+			std::is_convertible<T2, T>::value, T2>::type>
+	vec(const vec<N, T2>& x)
+	{
+	    *this = x;
+	}
 
-            vec(std::initializer_list<T> il) {
-                size_t i;
-                const T* it;
-                for (i = 0, it = il.begin(); it != il.end() && i < N; ++i, ++it)
-                    data[i] = *it;
-                for (; i < N; ++i)
-                    data[i] = T();
-            }
+	vec(std::initializer_list<T> il)
+	{
+	    size_t i;
+	    const T* it;
+	    for (i = 0, it = il.begin(); it != il.end() && i < N; ++i, ++it)
+		data[i] = *it;
+	    for (; i < N; ++i)
+		data[i] = T();
+	}
 
 
-            // operators
-            inline const T& operator[](size_t i) const {
-                return data[i];
-            }
+	// operators
+	inline const T& operator[](size_t i) const
+	{
+	    return data[i];
+	}
 
-            inline T& operator[](size_t i) {
-                return data[i];
-            }
+	inline T& operator[](size_t i)
+	{
+	    return data[i];
+	}
 
-            // unary sign operators
-            vec operator+() const {
-                return vec(*this);
-            }
+	// unary sign operators
+	vec operator+() const
+	{
+	    return vec(*this);
+	}
 
-            vec operator-() const {
-                vec res;
-                for (size_t i = 0; i < N; ++i)
-                    res.data[i] = -data[i];
-                return res;
-            }
+	vec operator-() const
+	{
+	    vec res;
+	    for (size_t i = 0; i < N; ++i)
+		res.data[i] = -data[i];
+	    return res;
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_integral<S>::value, vec&>::type
-            operator%= (const vec& rhs) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] %= rhs.data[i];
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<std::is_integral<S>::value, vec&>::type
+	operator%= (const vec& rhs)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] %= rhs.data[i];
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
-            operator%= (const vec& rhs) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = std::fmod(data[i], rhs.data[i]);
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
+	operator%= (const vec& rhs)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = std::fmod(data[i], rhs.data[i]);
+	}
 
-            vec& operator+= (const vec& rhs) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] += rhs.data[i];
-                return *this;
-            }
+	vec& operator+= (const vec& rhs)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] += rhs.data[i];
+	    return *this;
+	}
 
-            vec& operator-= (const vec& rhs) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] -= rhs.data[i];
-                return *this;
-            }
+	vec& operator-= (const vec& rhs)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] -= rhs.data[i];
+	    return *this;
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_integral<S>::value, vec&>::type
-            operator%= (const T& val) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] %= val;
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<std::is_integral<S>::value, vec&>::type
+	operator%= (const T& val)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] %= val;
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
-            operator%= (const T& val) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = std::fmod(data[i], val);
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<std::is_floating_point<S>::value,vec&>::type
+	operator%= (const T& val)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = std::fmod(data[i], val);
+	}
 
-            vec& operator*= (const T& val) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] *= val;
-                return *this;
-            }
+	vec& operator*= (const T& val)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] *= val;
+	    return *this;
+	}
 
-            vec& operator/= (const T& val) {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] /= val;
-                return *this;
-            }
+	vec& operator/= (const T& val)
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] /= val;
+	    return *this;
+	}
 
-            // friends
-            template <size_t N_, typename A, typename B>
-            friend bool operator== (const vec<N_,A>&, const vec<N_,B>&);
+	// friends
+	template <size_t N_, typename A, typename B>
+	friend bool operator== (const vec<N_,A>&, const vec<N_,B>&);
 
-            template <size_t N_, typename A, typename B, typename C>
-            friend typename std::enable_if<std::is_arithmetic<A>::value,C>::type
-            operator* (const vec<N_,A>&, const vec<N_,B>&);
+	template <size_t N_, typename A, typename B, typename C>
+	friend typename std::enable_if<std::is_arithmetic<A>::value,C>::type
+	operator* (const vec<N_,A>&, const vec<N_,B>&);
 
-            template <size_t N_, typename A, typename B, typename C>
-            friend typename std::enable_if<is_complex<A>::value,C>::type
-            operator* (const vec<N_,A>&, const vec<N_,B>&);
+	template <size_t N_, typename A, typename B, typename C>
+	friend typename std::enable_if<is_complex<A>::value,C>::type
+	operator* (const vec<N_,A>&, const vec<N_,B>&);
 
-            // norm
-            template <typename..., typename S = T>
-            typename std::enable_if<std::is_arithmetic<S>::value, S>::type
-            norm2_sq() const {
-                return (*this) * (*this);
-            }
+	// norm
+	template <typename..., typename S = T>
+	typename std::enable_if<std::is_arithmetic<S>::value, S>::type
+	norm2_sq() const
+	{
+	    return (*this) * (*this);
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<is_complex<S>::value,
-                                    typename S::value_type>::type
-            norm2_sq() const {
-                return ((*this) * (*this)).real();
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<is_complex<S>::value,
+				typename S::value_type>::type
+	norm2_sq() const
+	{
+	    return ((*this) * (*this)).real();
+	}
 
-            double norm(double p = 2) const {
-                double sum;
-                for (size_t i = 0; i < N; ++i)
-                    sum += pow(abs(data[i]), p);
-                return pow(sum, 1./p);
-            }
+	double norm(double p = 2) const
+	{
+	    double sum;
+	    for (size_t i = 0; i < N; ++i)
+		sum += pow(abs(data[i]), p);
+	    return pow(sum, 1./p);
+	}
 
-            template <typename..., typename S = T>
-            typename std::enable_if<is_complex<S>::value, void>::type
-            conj() {
-                for (size_t i = 0; i < N; ++i)
-                    data[i] = std::conj(data[i]);
-            }
+	template <typename..., typename S = T>
+	typename std::enable_if<is_complex<S>::value, void>::type
+	conj()
+	{
+	    for (size_t i = 0; i < N; ++i)
+		data[i] = std::conj(data[i]);
+	}
     };
 
     // dot product
     template <size_t N, typename A, typename B, typename C = decltype(A()*B())>
     typename std::enable_if<std::is_arithmetic<A>::value, C>::type
-    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         C sum;
         for (size_t i = 0; i < N; ++i)
             sum += lhs.data[i] * rhs.data[i];
@@ -199,7 +221,8 @@ namespace Vec {
 
     template <size_t N, typename A, typename B, typename C = decltype(A()*B())>
     typename std::enable_if<is_complex<A>::value, C>::type
-    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    operator*(const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         C sum;
         for (size_t i = 0; i < N; ++i)
             sum += conj(lhs.data[i]) * rhs.data[i];
@@ -210,7 +233,8 @@ namespace Vec {
     // cross product
     template <typename A, typename B, typename C = decltype(A()*B())>
     typename std::enable_if<std::is_arithmetic<A>::value, vec<3,C>>::type
-    cross(const vec<3,A>& lhs, const vec<3,B>& rhs) {
+    cross(const vec<3,A>& lhs, const vec<3,B>& rhs)
+    {
         return {lhs[1] * rhs[2] - lhs[2] * rhs[1],
                 lhs[2] * rhs[0] - lhs[0] * rhs[2],
                 lhs[0] * rhs[1] - lhs[1] * rhs[0]};
@@ -218,7 +242,8 @@ namespace Vec {
 
     template <typename A, typename B, typename C = decltype(A()*B())>
     typename std::enable_if<is_complex<A>::value, vec<3,C>>::type
-    cross(const vec<3,A>& lhs, const vec<3,B>& rhs) {
+    cross(const vec<3,A>& lhs, const vec<3,B>& rhs)
+    {
         return {std::conj(lhs[1] * rhs[2] - lhs[2] * rhs[1]),
                 std::conj(lhs[2] * rhs[0] - lhs[0] * rhs[2]),
                 std::conj(lhs[0] * rhs[1] - lhs[1] * rhs[0])};
@@ -228,7 +253,8 @@ namespace Vec {
     // complex conjugation
     template <size_t N, typename T>
     typename std::enable_if<is_complex<T>::value, vec<N,T>>::type
-    conj(const vec<N,T>& c) {
+    conj(const vec<N,T>& c)
+    {
         vec<N,T> res(c);
         res.conj();
         return res;
@@ -237,21 +263,24 @@ namespace Vec {
 
     // scalar multiplication
     template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
-    vec<N,C> operator* (const S& val, const vec<N,T>& rhs) {
+    vec<N,C> operator* (const S& val, const vec<N,T>& rhs)
+    {
         vec<N,C> res(rhs);
         res *= val;
         return res;
     }
 
     template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
-    vec<N,C> operator* (const vec<N,T>& lhs, const S& val) {
+    vec<N,C> operator* (const vec<N,T>& lhs, const S& val)
+    {
         vec<N,C> res(lhs);
         res *= val;
         return res;
     }
 
     template <size_t N, typename T, typename S, typename C = decltype(S()*T())>
-    vec<N,C> operator/ (const vec<N,T>& lhs, const S& val) {
+    vec<N,C> operator/ (const vec<N,T>& lhs, const S& val)
+    {
         vec<N,C> res(lhs);
         res /= val;
         return res;
@@ -260,14 +289,16 @@ namespace Vec {
 
     // modulo operator
     template <size_t N, typename T>
-    vec<N,T> operator% (const vec<N,T>& lhs, const vec<N,T>& rhs) {
+    vec<N,T> operator% (const vec<N,T>& lhs, const vec<N,T>& rhs)
+    {
         vec<N,T> res(lhs);
         res %= rhs;
         return res;
     }
 
     template <size_t N, typename T>
-    vec<N,T> operator% (const vec<N,T>& lhs, const T& val) {
+    vec<N,T> operator% (const vec<N,T>& lhs, const T& val)
+    {
         vec<N,T> res(lhs);
         res %= val;
         return res;
@@ -276,14 +307,16 @@ namespace Vec {
 
     // addition & subtraction operators
     template <size_t N, typename A, typename B, typename C = decltype(A()+B())>
-    vec<N,C> operator+ (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    vec<N,C> operator+ (const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         vec<N,C> res(lhs);
         res += rhs;
         return res;
     }
 
     template <size_t N, typename A, typename B, typename C = decltype(A()-B())>
-    vec<N,C> operator- (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    vec<N,C> operator- (const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         vec<N,C> res(lhs);
         res -= rhs;
         return res;
@@ -292,7 +325,8 @@ namespace Vec {
 
     // (in)equality operators
     template <size_t N, typename A, typename B>
-    bool operator== (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    bool operator== (const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         for (size_t i = 0; i < N; ++i)
             if (lhs.data[i] != rhs.data[i])
                 return false;
@@ -300,14 +334,16 @@ namespace Vec {
     }
 
     template <size_t N, typename A, typename B>
-    bool operator!= (const vec<N,A>& lhs, const vec<N,B>& rhs) {
+    bool operator!= (const vec<N,A>& lhs, const vec<N,B>& rhs)
+    {
         return !(lhs == rhs);
     }
 
 
     // stream operators
     template <size_t N, typename T>
-    std::ostream& operator<< (std::ostream& os, const vec<N,T>& rhs) {
+    std::ostream& operator<< (std::ostream& os, const vec<N,T>& rhs)
+    {
         os << "(" << rhs[0];
         for (size_t i = 1; i < N; ++i)
             os << ", " << rhs[i];

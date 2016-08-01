@@ -24,7 +24,8 @@ using namespace Vec;
 
 template <size_t N, typename T1, typename T2, typename S = T1,
           typename T3 = decltype(T1()+T2())>
-void add_test(S tol) {
+void add_test(S tol)
+{
     vec<N,T1> a;
     vec<N,T2> b;
     for (size_t i = 0; i < N; ++i) {
@@ -43,7 +44,8 @@ void add_test(S tol) {
         assert(CLOSE(d[i], c[i], tol));
 }
 
-int main () {
+int main ()
+{
     // tests with same types
     add_test<10, int, int>(0);
     add_test<10, float, float>(100 * std::numeric_limits<float>::epsilon());
